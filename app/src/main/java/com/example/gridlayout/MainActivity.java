@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+//import java.util.logging.Handler;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,14 +21,36 @@ public class MainActivity extends AppCompatActivity {
     private static final int COLOR_INVISIBLE = Color.rgb(102, 204, 0);
 
     private ArrayList<TextView> cell_tvs;
+    private TextView activity_main_secondsUsed;
     private Game game;
 
     private int clock = 0;
     private boolean clock_running = false;
     private int tool = R.string.pick;
+    private Handler clockHandler = new Handler();
+    private Runnable clockRunnable;
+
+
 
     public void onClickCellTextView(View view) {
         TextView clickedTextView = (TextView) view;
+    }
+
+    private void runTimer() {
+            clock_running = true;
+            clockRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        clock++;
+                        activity_main_secondsUsed.setText(String.format("%02d", clock));
+                        clockHandler.postDelayed(this, 1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            clockHandler.postDelayed(clockRunnable, 1000);
     }
 
     @Override
@@ -62,10 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tv_minesLeft = (TextView) findViewById(R.id.activity_main_minesLeft);
         tv_minesLeft.setText(String.valueOf(game.MINE_COUNT));
+        activity_main_secondsUsed = findViewById(R.id.activity_main_secondsUsed);
 
         clock = 0;
         clock_running = true;
-        //runTimer();
+        runTimer();
     }
 
 }
