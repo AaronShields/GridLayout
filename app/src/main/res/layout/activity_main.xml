@@ -6,88 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/gridLayout01"
-        android:layout_width="150dp"
-        android:layout_height="500dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:layout_gravity="center"
-        app:rowCount="10"
-        app:columnCount="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <LinearLayout
+        android:id="@+id/activity_main_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
-
+        app:layout_constraintBottom_toTopOf="@+id/activity_main_gridLayout">
 
         <TextView
-            android:id="@+id/textView00"
+            android:id="@+id/activity_main_Flag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:height="64dp"
-            android:width="64dp"
+            android:layout_marginEnd="32dp"
             android:text="@string/flag"
-            android:textSize="32sp"
-            android:textAlignment="center"
-            app:layout_column="0"
-            app:layout_row="0" />
+            android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/textView01"
+            android:id="@+id/activity_main_minesLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:height="64dp"
-            android:width="64dp"
-            android:text="@string/mine"
-            android:textSize="32sp"
-            android:textAlignment="center"
-            app:layout_column="1"
-            app:layout_row="0" />
+            android:layout_marginEnd="32dp"
+            android:text="00"
+            android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/activity_main_clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:height="64dp"
-            android:width="64dp"
-            android:text="10"
-            android:textSize="32sp"
-            android:textAlignment="center"
-            app:layout_column="0"
-            app:layout_row="1" />
+            android:layout_marginStart="32dp"
+            android:text="@string/clock"
+            android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/activity_main_secondsUsed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:width="64dp"
-            android:height="64dp"
-            android:text="11"
-            android:textSize="32sp"
-            android:textAlignment="center"
-            app:layout_column="1"
-            app:layout_row="1" />
+            android:layout_marginStart="32dp"
+            android:text="00"
+            android:textSize="32sp" />
+
+    </LinearLayout>
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/activity_main_gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:columnCount="10"
+        app:layout_constraintBottom_toTopOf="@+id/activity_main_tool"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_main_linearLayout"
+        app:rowCount="12">
 
     </androidx.gridlayout.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/activity_main_tool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:text="@string/pick"
+        android:textSize="48sp"
+        android:onClick="onClickTool"
+        app:layout_constraintTop_toBottomOf="@id/activity_main_gridLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
