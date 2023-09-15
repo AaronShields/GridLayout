@@ -41,6 +41,7 @@ public class Game {
             int row = random.nextInt(ROW_COUNT);
             int column = random.nextInt(COLUMN_COUNT);
 
+            System.out.println(row + "," + column);
             if(!mineLocations[row][column]){
                 mineLocations[row][column] = true;
                 minesPlaced++;
@@ -49,6 +50,11 @@ public class Game {
     }
     private void cellRevealed() {
         cellRevealed = new boolean[ROW_COUNT][COLUMN_COUNT];
+    }
+
+    public boolean isMineAt(int row, int col) {
+        // Check if there is a mine at the specified row and column
+        return mineLocations[row][col];
     }
 
 }
