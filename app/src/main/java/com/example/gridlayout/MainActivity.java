@@ -5,6 +5,7 @@ import androidx.gridlayout.widget.GridLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -33,38 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isFlag = false;
 
-    //private boolean FlagActive = false;
-    /*
-    private int getRowFromTextView(TextView textView) {
-        // Get the layout parameters associated with the TextView
-        ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
-
-        if (layoutParams instanceof GridLayout.LayoutParams) {
-            // If the layout parameters are of type GridLayout.LayoutParams
-            GridLayout.LayoutParams gridLayoutParams = (GridLayout.LayoutParams) layoutParams;
-            return gridLayoutParams.rowSpec.span;
-        } else {
-            // Handle the case where the layout parameters are not GridLayout.LayoutParams
-            // You can provide a default value or handle this according to your layout structure.
-            return -1; // Default value or appropriate handling
-        }
-    }
-
-    private int getColumnFromTextView(TextView textView) {
-        // Get the layout parameters associated with the TextView
-        ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
-
-        if (layoutParams instanceof GridLayout.LayoutParams) {
-            // If the layout parameters are of type GridLayout.LayoutParams
-            GridLayout.LayoutParams gridLayoutParams = (GridLayout.LayoutParams) layoutParams;
-            return gridLayoutParams.columnSpec.span;
-        } else {
-            // Handle the case where the layout parameters are not GridLayout.LayoutParams
-            // You can provide a default value or handle this according to your layout structure.
-            return -1; // Default value or appropriate handling
-        }
-    }
-    */
     public void onClickTool(View view) {
         TextView toolTextView = (TextView) view;
 
@@ -75,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             // Switch to the flag tool
             toolTextView.setText(R.string.flag);
         }
-
         isFlag = !isFlag;
     }
 
@@ -85,18 +53,29 @@ public class MainActivity extends AppCompatActivity {
         TextView clickedTextView = (TextView) view;
         int row = cell_tvs.indexOf(clickedTextView) / Game.COLUMN_COUNT;
         int col = cell_tvs.indexOf(clickedTextView) % Game.COLUMN_COUNT;
+        int backgroundColor = ((ColorDrawable) clickedTextView.getBackground()).getColor();
+        boolean containsFlag = clickedTextView.getText().toString().equals("🚩");
 
 
-            // Check is cell contains mine
-        if (!game.isMineAt(row, col)) {
-            //If cell doesn't contain mine then mine is revealed
-            clickedTextView.setBackgroundColor(COLOR_VISIBLE);
+        if(isFlag && backgroundColor != COLOR_VISIBLE) {
+
+            if (containsFlag) {
+                clickedTextView.setText("");
+            } else {
+                clickedTextView.setText("🚩");
+            }
         }
         else {
-            //For now, if cell contains mine then print game over
-            System.out.println("Game over");
+            if (!game.isMineAt(row, col)) {
+                //If cell doesn't contain mine then mine is revealed
+                clickedTextView.setBackgroundColor(COLOR_VISIBLE);
+            } else {
+                //For now, if cell contains mine then print game over
+                System.out.println("Game over");
+            }
         }
     }
+
     private void runTimer() {
             clock_running = true;
             clockRunnable = new Runnable() {
