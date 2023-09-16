@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private int tool = R.string.pick;
     private Handler clockHandler = new Handler();
     private Runnable clockRunnable;
+
+    private boolean isFlag = false;
+
+    //private boolean FlagActive = false;
     /*
     private int getRowFromTextView(TextView textView) {
         // Get the layout parameters associated with the TextView
@@ -61,25 +65,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     */
+    public void onClickTool(View view) {
+        TextView toolTextView = (TextView) view;
+
+        if (isFlag) {
+            // Switch to the pick tool
+            toolTextView.setText(R.string.pick);
+        } else {
+            // Switch to the flag tool
+            toolTextView.setText(R.string.flag);
+        }
+
+        isFlag = !isFlag;
+    }
 
 
     public void onClickCellTextView(View view) {
+
         TextView clickedTextView = (TextView) view;
+        int row = cell_tvs.indexOf(clickedTextView) / Game.COLUMN_COUNT;
+        int col = cell_tvs.indexOf(clickedTextView) % Game.COLUMN_COUNT;
 
-        /*int row = getRowFromTextView(clickedTextView);
-        int col = getColumnFromTextView(clickedTextView);
 
-        // Check if the clicked cell contains a mine
+            // Check is cell contains mine
         if (!game.isMineAt(row, col)) {
-            // Cell does not contain a mine, so reveal it (change background color to grey)
+            //If cell doesn't contain mine then mine is revealed
             clickedTextView.setBackgroundColor(COLOR_VISIBLE);
-        } else {
-            // Cell contains a mine, handle the game over logic (you can implement this)
-            //handleGameOver();
+        }
+        else {
+            //For now, if cell contains mine then print game over
             System.out.println("Game over");
         }
-        // Add your additional game logic here
-         */
     }
     private void runTimer() {
             clock_running = true;
