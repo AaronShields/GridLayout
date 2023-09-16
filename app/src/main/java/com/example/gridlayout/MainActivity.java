@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private int tool = R.string.pick;
     private Handler clockHandler = new Handler();
     private Runnable clockRunnable;
+    boolean gamelost = false;
 
     private boolean isFlag = false;
 
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 //For now, if cell contains mine then print game over
                 System.out.println("Game over");
                 revealAllMines();
+                gamelost = true;
             }
         }
     }
