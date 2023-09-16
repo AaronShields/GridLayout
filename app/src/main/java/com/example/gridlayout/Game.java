@@ -14,7 +14,7 @@ public class Game {
 
     private boolean gameWon;
     private boolean gameLost;
-
+    // put these in main_activity??
 
     public Game() {
 

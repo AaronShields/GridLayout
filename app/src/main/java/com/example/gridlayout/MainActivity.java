@@ -72,6 +72,20 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 //For now, if cell contains mine then print game over
                 System.out.println("Game over");
+                revealAllMines();
+            }
+        }
+    }
+
+    private void revealAllMines() {
+        for (TextView cell : cell_tvs) {
+            int row = cell_tvs.indexOf(cell) / Game.COLUMN_COUNT;
+            int col = cell_tvs.indexOf(cell) % Game.COLUMN_COUNT;
+
+            if (game.isMineAt(row, col)) {
+                // If the cell contains a mine, reveal it
+                cell.setBackgroundColor(COLOR_VISIBLE);
+                cell.setText("💣");
             }
         }
     }
