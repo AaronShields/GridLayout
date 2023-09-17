@@ -3,6 +3,9 @@ package com.example.gridlayout;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Pair;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -21,7 +24,9 @@ public class Game {
     private boolean gameWon;
     private boolean gameLost;
     private int COLOR_VISIBLE;
+    private int revealedTiles;
     private ArrayList<TextView> cell_tvs;
+    private int revealedTilesWithColor;
 
 
     public Game(ArrayList<TextView> cell_tvs, int COLOR_VISIBLE) {
@@ -29,6 +34,8 @@ public class Game {
         this.COLOR_VISIBLE = COLOR_VISIBLE;
         createGameboard();
         placeMines();
+        revealedTiles = 0;
+        revealedTilesWithColor = 0;
         cellRevealed = new boolean[ROW_COUNT][COLUMN_COUNT];
     }
     private void createGameboard() {
@@ -135,7 +142,10 @@ public class Game {
     }
 
     public void revealCell(int row, int col) {
-        cellRevealed[row][col] = true;
+        if(!cellRevealed[row][col]){
+            cellRevealed[row][col] = true;
+        }
+        revealedTiles++;
     }
 
 

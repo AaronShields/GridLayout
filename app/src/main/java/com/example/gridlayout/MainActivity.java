@@ -70,7 +70,13 @@ public class MainActivity extends AppCompatActivity {
                     clickedTextView.setBackgroundColor(COLOR_VISIBLE);
                     game.revealCell(row, col); // Mark the cell as revealed
                     game.revealCellBFS(row, col);
-                } else {
+                    countRevealedTiles();
+                    if (countRevealedTiles() == (Game.ROW_COUNT * Game.COLUMN_COUNT) - Game.MINE_COUNT) {
+                        // Game is won
+                        System.out.println("Game won");
+                    }
+                }
+                else {
                     // For now, if cell contains a mine then print game over
                     System.out.println("Game over");
                     revealAllMines();
@@ -79,6 +85,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private int countRevealedTiles() {
+        int revealedCount = 0;
+        for (TextView textView : cell_tvs) {
+            int backgroundColor = ((ColorDrawable) textView.getBackground()).getColor();
+            if (backgroundColor == COLOR_VISIBLE) {
+                revealedCount++;
+            }
+
+        }
+        System.out.println("Revealed tiles:" + revealedCount);
+        return revealedCount;
+
     }
 
     private void revealAllMines() {
