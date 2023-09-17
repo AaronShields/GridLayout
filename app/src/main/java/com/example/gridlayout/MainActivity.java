@@ -57,24 +57,26 @@ public class MainActivity extends AppCompatActivity {
         int backgroundColor = ((ColorDrawable) clickedTextView.getBackground()).getColor();
         boolean containsFlag = clickedTextView.getText().toString().equals("🚩");
 
-
-        if(isFlag && backgroundColor != COLOR_VISIBLE) {
-
-            if (containsFlag) {
-                clickedTextView.setText("");
+        if (!game.cellRevealed(row, col)) {
+            if (isFlag && backgroundColor != COLOR_VISIBLE) {
+                if (containsFlag) {
+                    clickedTextView.setText("");
+                } else {
+                    clickedTextView.setText("🚩");
+                }
             } else {
-                clickedTextView.setText("🚩");
-            }
-        }
-        else {
-            if (!game.isMineAt(row, col)) {
-                //If cell doesn't contain mine then mine is revealed
-                clickedTextView.setBackgroundColor(COLOR_VISIBLE);
-            } else {
-                //For now, if cell contains mine then print game over
-                System.out.println("Game over");
-                revealAllMines();
-                gamelost = true;
+                if (!game.isMineAt(row, col)) {
+                    // If cell doesn't contain a mine and hasn't been revealed, reveal it
+                    clickedTextView.setBackgroundColor(COLOR_VISIBLE);
+                    game.revealCell(row, col); // Mark the cell as revealed
+                    game.revealCellBFS(row, col);
+                } else {
+                    // For now, if cell contains a mine then print game over
+                    System.out.println("Game over");
+                    revealAllMines();
+                    gamelost = true;
+                    stopTimer();
+                }
             }
         }
     }
@@ -109,14 +111,20 @@ public class MainActivity extends AppCompatActivity {
             clockHandler.postDelayed(clockRunnable, 1000);
     }
 
+    private void stopTimer(){
+        clock_running = false;
+        clockHandler.removeCallbacks(clockRunnable);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        game = new Game();
+
 
         cell_tvs = new ArrayList<>();
+
         //create the cell's textViews in the gridLayout
         GridLayout gridLayout = (GridLayout) findViewById(R.id.activity_main_gridLayout);
         LayoutInflater li = LayoutInflater.from(this);
@@ -138,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-
+        game = new Game(cell_tvs, COLOR_VISIBLE);
         TextView tv_minesLeft = (TextView) findViewById(R.id.activity_main_minesLeft);
         tv_minesLeft.setText(String.valueOf(game.MINE_COUNT));
         activity_main_secondsUsed = findViewById(R.id.activity_main_secondsUsed);
