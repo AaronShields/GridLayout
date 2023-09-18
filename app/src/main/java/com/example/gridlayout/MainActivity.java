@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Game over");
                     revealAllMines();
                     gameLost = true;
-                    stopTimer();
+                    //stopTimer();
+                    //make it so that new click launches results page
                     launchResultsPage(false);
                 }
             }
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
     private void launchResultsPage(boolean gameResult) {
         Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
         intent.putExtra("game_result", gameResult); // Pass true for win, false for loss
+        intent.putExtra("clockTime", clock);
         startActivity(intent);
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.Intent;
 
 public class ResultsActivity extends AppCompatActivity {
 
@@ -20,13 +21,15 @@ public class ResultsActivity extends AppCompatActivity {
 
        //Game result retrieved
         boolean gameResult = getIntent().getBooleanExtra("game_result", false);
+       //Time received
+       int clockTime = getIntent().getIntExtra("clockTime", 0);
 
-        // Placeholders until clock is set
+        // Clock 
         if (gameResult) {
-            resultMessage.setText("Congratulations! You won!");
+            resultMessage.setText("Used " + clockTime + " seconds.\n" + "       You won.\n" + "      Good job!");
 
         } else {
-            resultMessage.setText("Sorry, you lost.");
+            resultMessage.setText("Used " + clockTime + " seconds.\n" + "      You lost.\n" + "        Sorry!");
 
         }
         //Set up button
@@ -34,6 +37,8 @@ public class ResultsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //
+                Intent intent = new Intent(ResultsActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
