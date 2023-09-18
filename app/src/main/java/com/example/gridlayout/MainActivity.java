@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private int tool = R.string.pick;
     private Handler clockHandler = new Handler();
     private Runnable clockRunnable;
-    boolean gamelost = false;
+    boolean gameLost = false;
+    boolean gameWon = false;
 
     private boolean isFlag = false;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void onClickCellTextView(View view) {
 
         TextView clickedTextView = (TextView) view;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         int col = cell_tvs.indexOf(clickedTextView) % Game.COLUMN_COUNT;
         int backgroundColor = ((ColorDrawable) clickedTextView.getBackground()).getColor();
         boolean containsFlag = clickedTextView.getText().toString().equals("🚩");
+
 
         if (!game.cellRevealed(row, col)) {
             if (isFlag && backgroundColor != COLOR_VISIBLE) {
@@ -74,14 +77,16 @@ public class MainActivity extends AppCompatActivity {
                     if (countRevealedTiles() == (Game.ROW_COUNT * Game.COLUMN_COUNT) - Game.MINE_COUNT) {
                         // Game is won
                         System.out.println("Game won");
+                        launchResultsPage(true);
                     }
                 }
                 else {
                     // For now, if cell contains a mine then print game over
                     System.out.println("Game over");
                     revealAllMines();
-                    gamelost = true;
+                    gameLost = true;
                     stopTimer();
+                    launchResultsPage(false);
                 }
             }
         }
@@ -129,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
             clockHandler.postDelayed(clockRunnable, 1000);
+    }
+
+    private void launchResultsPage(boolean gameResult) {
+        Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
+        intent.putExtra("game_result", gameResult); // Pass true for win, false for loss
+        startActivity(intent);
     }
 
     private void stopTimer(){
