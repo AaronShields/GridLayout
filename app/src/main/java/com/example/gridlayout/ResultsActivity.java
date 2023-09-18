@@ -24,7 +24,7 @@ public class ResultsActivity extends AppCompatActivity {
        //Time received
        int clockTime = getIntent().getIntExtra("clockTime", 0);
 
-        // Clock 
+        // Clock
         if (gameResult) {
             resultMessage.setText("Used " + clockTime + " seconds.\n" + "       You won.\n" + "      Good job!");
 

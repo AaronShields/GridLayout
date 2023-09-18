@@ -59,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
         int backgroundColor = ((ColorDrawable) clickedTextView.getBackground()).getColor();
         boolean containsFlag = clickedTextView.getText().toString().equals("🚩");
 
+        if(gameLost){
+            launchResultsPage(false);
+        }
+        if(gameWon){
+            launchResultsPage(true);
+        }
+
 
         if (!game.cellRevealed(row, col)) {
             if (isFlag && backgroundColor != COLOR_VISIBLE) {
@@ -68,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     clickedTextView.setText("🚩");
                 }
             } else {
-                if (!game.isMineAt(row, col)) {
+                if (!game.isMineAt(row, col) && gameWon != true && gameLost != true) {
                     // If cell doesn't contain a mine and hasn't been revealed, reveal it
                     clickedTextView.setBackgroundColor(COLOR_VISIBLE);
                     game.revealCell(row, col); // Mark the cell as revealed
@@ -77,17 +84,18 @@ public class MainActivity extends AppCompatActivity {
                     if (countRevealedTiles() == (Game.ROW_COUNT * Game.COLUMN_COUNT) - Game.MINE_COUNT) {
                         // Game is won
                         System.out.println("Game won");
-                        launchResultsPage(true);
+                        gameWon = true;
+                        // launchResultsPage(true);
                     }
                 }
                 else {
                     // For now, if cell contains a mine then print game over
-                    System.out.println("Game over");
-                    revealAllMines();
-                    gameLost = true;
-                    //stopTimer();
-                    //make it so that new click launches results page
-                    launchResultsPage(false);
+                    if(gameWon != true){
+                        System.out.println("Game over");
+                        revealAllMines();
+                        gameLost = true;
+                    }
+
                 }
             }
         }
@@ -114,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (game.isMineAt(row, col)) {
                 // If the cell contains a mine, reveal it
-                cell.setBackgroundColor(COLOR_VISIBLE);
+                cell.setBackgroundColor(COLOR_INVISIBLE);
                 cell.setText("💣");
             }
         }
