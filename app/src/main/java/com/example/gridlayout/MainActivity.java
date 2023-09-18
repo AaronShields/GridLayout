@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("Game won");
                         gameWon = true;
                         // launchResultsPage(true);
+                        revealAllMines();
                     }
                 }
                 else {
