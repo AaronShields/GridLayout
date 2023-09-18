@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
 //import java.util.logging.Handler;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Runnable clockRunnable;
     boolean gameLost = false;
     boolean gameWon = false;
+    private int flagsPlaced = 0;
 
     private boolean isFlag = false;
 
@@ -71,11 +74,17 @@ public class MainActivity extends AppCompatActivity {
             if (isFlag && backgroundColor != COLOR_VISIBLE) {
                 if (containsFlag) {
                     clickedTextView.setText("");
-                } else {
-                    clickedTextView.setText("🚩");
+                    flagsPlaced--;
                 }
-            } else {
-                if (!game.isMineAt(row, col) && gameWon != true && gameLost != true) {
+                else {
+                    clickedTextView.setText("🚩");
+                    flagsPlaced++;
+                }
+                TextView tv_minesLeft = findViewById(R.id.activity_main_minesLeft);
+                tv_minesLeft.setText(String.valueOf(game.MINE_COUNT - flagsPlaced));
+            }
+            else {
+                if (!game.isMineAt(row, col) && gameWon != true && gameLost != true && !containsFlag) {
                     // If cell doesn't contain a mine and hasn't been revealed, reveal it
                     clickedTextView.setBackgroundColor(COLOR_VISIBLE);
                     game.revealCell(row, col); // Mark the cell as revealed
@@ -91,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     // For now, if cell contains a mine then print game over
-                    if(gameWon != true){
+                    if(gameWon != true && !containsFlag){
                         System.out.println("Game over");
                         revealAllMines();
                         gameLost = true;
@@ -163,7 +172,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        TextView tv_minesLeft = (TextView) findViewById(R.id.activity_main_minesLeft);
+        tv_minesLeft.setText(String.valueOf(game.MINE_COUNT - flagsPlaced));
 
         cell_tvs = new ArrayList<>();
 
@@ -189,8 +199,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         game = new Game(cell_tvs, COLOR_VISIBLE);
-        TextView tv_minesLeft = (TextView) findViewById(R.id.activity_main_minesLeft);
-        tv_minesLeft.setText(String.valueOf(game.MINE_COUNT));
         activity_main_secondsUsed = findViewById(R.id.activity_main_secondsUsed);
 
         clock = 0;
