@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     countRevealedTiles();
                     if (countRevealedTiles() == (Game.ROW_COUNT * Game.COLUMN_COUNT) - Game.MINE_COUNT) {
                         // Game is won
-                        System.out.println("Game won");
+                        //System.out.println("Game won");
                         gameWon = true;
                         // launchResultsPage(true);
                         revealAllMines();
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     // For now, if cell contains a mine then print game over
                     if(gameWon != true && !containsFlag){
-                        System.out.println("Game over");
+                        //System.out.println("Game over");
                         revealAllMines();
                         gameLost = true;
                     }
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        System.out.println("Revealed tiles:" + revealedCount);
+        //System.out.println("Revealed tiles:" + revealedCount);
         return revealedCount;
 
     }

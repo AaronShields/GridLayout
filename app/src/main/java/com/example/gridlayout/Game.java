@@ -21,8 +21,6 @@ public class Game {
     private int[][] gameBoard;
     private boolean[][] mineLocations;
 
-    private boolean gameWon;
-    private boolean gameLost;
     private int COLOR_VISIBLE;
     private int revealedTiles;
     private ArrayList<TextView> cell_tvs;
@@ -92,6 +90,8 @@ public class Game {
         return count;
     }
 
+
+    // BFS Function
     public void revealCellBFS(int row, int col) {
         Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
         boolean[][] visited = new boolean[ROW_COUNT][COLUMN_COUNT];
