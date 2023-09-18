@@ -116,6 +116,7 @@ public class Game {
                 // Cell is empty, reveal it, queue other cells
                 TextView currentTextView = cell_tvs.get(currentRow * COLUMN_COUNT + currentCol);
                 currentTextView.setBackgroundColor(COLOR_VISIBLE);
+                currentTextView.setText("");
 
                 int[][] directions = {
                         {-1, 0}, {1, 0}, {0, -1}, {0, 1}
